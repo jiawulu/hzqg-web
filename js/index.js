@@ -12,19 +12,24 @@ $(function () {
             //for(var a : data.data.)
             var str = "";
 
-            for(var i=0;i<data.data.values.length;i++){
+            //for(var i=0;i<data.data.values.length;i++){
+            //
+            //    var value = data.data.values[i];
+            //    console.log(value);
+            //
+            //    str += ("<tr><td>" + value.id + "</td>" +
+            //            "<td>" + value.bmmll + "</td>" +
+            //            "<td>"  +  "</td>" +
+            //            "<td>" +  "</td></tr>"  );
+            //
+            //}
 
-                var value = data.data.values[i];
-                console.log(value);
+            var template = $('#main_table_tmpl').html();
+            Mustache.parse(template);   // optional, speeds up future uses
+            var rendered = Mustache.render(template, data.data);
+            $('#main_table tbody').html(rendered);
 
-                str += ("<tr><td>" + value.id + "</td>" +
-                        "<td>" + value.bmmll + "</td>" +
-                        "<td>"  +  "</td>" +
-                        "<td>" +  "</td></tr>"  );
-
-            }
-
-            $("#main_table tbody").html(str);
+            //$("#main_table tbody").html(str);
 
 
         }else {
@@ -32,6 +37,35 @@ $(function () {
         }
 
     },"GET")
+
+    $("#main_table").on("click", "tr", function() {
+        alert($( this ).text());
+    });
+
+    $("#main_table").on("click", "tr .gdsj", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        //alert(1);
+        //alert($( this ).text());
+
+        bootbox.dialog({
+                title: "This is a form in a modal.",
+                message: $('#gdzj_form_tmpl').html(),
+                buttons: {
+                    success: {
+                        label: "Save",
+                        className: "btn-success",
+                        callback: function () {
+                            var name = $('#name').val();
+                            var answer = $("input[name='awesomeness']:checked").val()
+                            Example.show("Hello " + name + ". You've chosen <b>" + answer + "</b>");
+                        }
+                    }
+                }
+            }
+        );
+    });
+
 
     //http://jqpaginator.keenwon.com/
     $('#table_pager').jqPaginator({

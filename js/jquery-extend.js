@@ -42,7 +42,8 @@ $(function () {
 
 
     $.toast = function(msg){
-        $.toaster({priority: 'warning', message: msg});
+        bootbox.alert(msg);
+        //$.toaster({priority: 'warning', message: msg});
     }
 
 });
