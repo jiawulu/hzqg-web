@@ -51,6 +51,8 @@ $(function () {
         bootbox.dialog({
                 title: "This is a form in a modal.",
                 message: $('#gdzj_form_tmpl').html(),
+                //size:"large",
+                className: "modal100",
                 buttons: {
                     success: {
                         label: "Save",

@@ -11,106 +11,21 @@
 
     <title>信息管理系统</title>
 
-    <!-- Bootstrap Core CSS -->
+    <!-- build:style  bootstrap_css -->
     <link href="vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
+    <!-- /build -->
+
+    <!-- build:style inline index_css -->
+    <link rel="stylesheet" type="text/css" href="css/index.css"/>
+    <!-- /build -->
+
     <style>
-
-        body {
-            background-color: #f8f8f8;
-            padding-top: 50px;
+        .modal90 > .modal-dialog {
+            width: 90% !important;
         }
 
-        /* Top Navigation */
-        .top-nav {
-            padding: 0 15px;
-        }
-
-        .top-nav > li {
-            display: inline-block;
-            float: left;
-        }
-
-        .top-nav > li > a {
-            padding-top: 15px;
-            padding-bottom: 15px;
-            line-height: 20px;
-            color: #999;
-        }
-
-        .top-nav > li > a:hover {
-            color: #fff;
-            background-color: #999;
-        }
-
-        .top-nav > .open > .dropdown-menu > li > a {
-            white-space: normal;
-        }
-
-        .dropdown.dropdown-lg .dropdown-menu {
-            margin-top: -1px;
-            padding: 6px 20px;
-        }
-
-        .input-group-btn .btn-group {
-            display: flex !important;
-        }
-
-        .btn-group .btn {
-            border-radius: 0;
-            margin-left: -1px;
-        }
-
-        .btn-group .btn:last-child {
-            border-top-right-radius: 4px;
-            border-bottom-right-radius: 4px;
-        }
-
-        .btn-group .form-horizontal .btn[type="submit"] {
-            border-top-left-radius: 4px;
-            border-bottom-left-radius: 4px;
-        }
-
-        .form-horizontal .form-group {
-            margin-left: 0;
-            margin-right: 0;
-        }
-
-        .form-group .form-control:last-child {
-            border-top-left-radius: 4px;
-            border-bottom-left-radius: 4px;
-        }
-
-        #wrapper {
-            width: 100%;
-        }
-
-        #page-wrapper {
-            padding: 50px 15px;
-            min-height: 568px;
-            background-color: #fff;
-        }
-
-        @media (min-width: 768px) {
-            #page-wrapper {
-                padding: 0px 15px;
-            }
-        }
-
-        /* search */
-        @media screen and (min-width: 768px) {
-            #adv-search {
-                width: 500px;
-                margin: 0 auto;
-            }
-
-            .dropdown.dropdown-lg {
-                position: static !important;
-            }
-
-            .dropdown.dropdown-lg .dropdown-menu {
-                min-width: 500px;
-            }
+        .modal100 > .modal-dialog {
+            width: 100% !important;
         }
     </style>
 
@@ -191,10 +106,30 @@
             <table id="main_table" class="table table-bordered table-hover" cellspacing="0" width="100%">
                 <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Position</th>
-                    <th>Office</th>
-                    <th>Extn.</th>
+                    <th nowrap="nowrap">客户</th>
+                    <th nowrap="nowrap">客户订单号</th>
+                    <th nowrap="nowrap">外销交期</th>
+                    <th nowrap="nowrap">订单操作员</th>
+                    <th nowrap="nowrap">外销号</th>
+                    <th nowrap="nowrap">采购交期</th>
+                    <th nowrap="nowrap">客号</th>
+                    <th nowrap="nowrap">工厂货号</th>
+                    <th nowrap="nowrap">下单日期</th>
+                    <th nowrap="nowrap">采购合同</th>
+                    <th nowrap="nowrap">工厂</th>
+                    <th nowrap="nowrap">产品描述</th>
+                    <th nowrap="nowrap">装箱率</th>
+                    <th nowrap="nowrap">包装说明</th>
+                    <th nowrap="nowrap">外销价</th>
+                    <th nowrap="nowrap">采购价</th>
+                    <th nowrap="nowrap">数量</th>
+                    <th nowrap="nowrap">价格条款</th>
+                    <th nowrap="nowrap">合同星级</th>
+                    <th nowrap="nowrap">外销总价</th>
+                    <th nowrap="nowrap">内销总价</th>
+                    <th nowrap="nowrap">毛利率</th>
+                    <th nowrap="nowrap">部门毛利率</th>
+                    <th nowrap="nowrap">检验要求</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -212,12 +147,34 @@
 <script id="main_table_tmpl" type="x-tmpl-mustache">
 {{#values}}
 <tr>
-    <td> {{ bmmll }} </td>
-    <td> {{ kfddh }} </td>
-    <td> {{ kh }} </td>
-    <td> <a>{{ id }}</a> <a href="#" class="gdsj">跟单数据</a></td>
+<td>{{    kh }}    </td>
+<td>{{    khddh }} </td>
+<td>{{    wxjq }}  </td>
+<td>{{    ddczy }} </td>
+<td>{{    wxh }}   </td>
+<td>{{    cgjq }}  </td>
+<td>{{    kehao }} </td>
+<td>{{    gchh }}  </td>
+<td>{{    xdrq }}  </td>
+<td>{{    cght }}  </td>
+<td>{{    gc }}    </td>
+<td>{{    cpms }}  </td>
+<td>{{   zxl }}    </td>
+<td>{{    bzsm }}  </td>
+<td>{{   wxj }}    </td>
+<td>{{   cgj }}    </td>
+<td>{{   sl }}     </td>
+<td>{{    jgtk }}  </td>
+<td>{{    htxj }}  </td>
+<td>{{   wxzj }}   </td>
+<td>{{   nxzj }}   </td>
+<td>{{   mll }}    </td>
+<td>{{   bmmll }}  </td>
+<td>{{    jyyq }}  </td>
 </tr>
 {{/values}}
+
+
 
 
 </script>
@@ -274,9 +231,9 @@
     </form>
 </div>
 </div>
+
+
 </script>
-
-
 
 
 <script>window.jQuery || document.write('<script src="vendor/jquery/jquery-1.12.0.min.js"><\/script>')</script>

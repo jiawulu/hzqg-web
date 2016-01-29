@@ -31,15 +31,54 @@ module.exports = function (grunt) {
             }
         },
 
+        cssmin: {
+            bootstrap: {
+                src: ['vendor/bootstrap/bootstrap.css'],
+                dest: 'dist/css/bootstrap.min.css'
+            },
+            index: {
+                src: ['css/index.css'],
+                dest: 'dist/css/index.min.css'
+            }
+        },
 
-        //cssmin: {
-        //    combine: {
-        //        files: {
-        //            "<%= distPath %>/sku_1x.css": "<%= distPath %>/sku_1x.debug.css",
-        //            "<%= distPath %>/sku_2x.css": "<%= distPath %>/sku_2x.debug.css"
-        //        }
-        //    }
-        //},
+        htmlbuild: {
+            dist: {
+                src: 'index.html',
+                dest: 'dist/',
+                options: {
+                    //beautify: true,
+                    //prefix: '//some-cdn',
+                    relative: true,
+                    //scripts: {
+                    //    bundle: [
+                    //        '<%= fixturesPath %>/scripts/*.js',
+                    //        '!**/main.js',
+                    //    ],
+                    //    main: '<%= fixturesPath %>/scripts/main.js'
+                    //},
+                    styles: {
+                        'bootstrap_css': [
+                            'dist/css/bootstrap.min.css'
+                        ],
+                        'index_css': 'dist/css/index.min.css'
+                    },
+                    //sections: {
+                    //    views: '<%= fixturesPath %>/views/**/*.html',
+                    //    templates: '<%= fixturesPath %>/templates/**/*.html',
+                    //    layout: {
+                    //        header: '<%= fixturesPath %>/layout/header.html',
+                    //        footer: '<%= fixturesPath %>/layout/footer.html'
+                    //    }
+                    //},
+                    //data: {
+                    //    // Data to pass to templates
+                    //    version: "0.1.0",
+                    //    title: "test",
+                    //},
+                }
+            }
+        }
         //
         //watch: {
         //    js: {
@@ -63,9 +102,11 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-html-build');
 
 
 // Default grunt
-    grunt.registerTask('default', ['clean', 'concat', 'uglify'])
+    grunt.registerTask('default', ['clean', 'concat', 'uglify', 'cssmin','htmlbuild'])
+
 
 }

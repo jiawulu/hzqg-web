@@ -25,13 +25,13 @@ $(function () {
             data: data,
             error: function (e) {
                 console.log(data);
-                $.toaster({priority: 'warning', title: '错误', message: '接口请求失败'});
+                $.toast('接口请求失败');
             },
             success: function (data) {
                 console.log(data);
                 if (-1 == data.code) {
-                    window.location.href = "http://localhost/login.html"
-                }else{
+                    window.location.href = "http://localhost/hzqg/login.html"
+                } else {
                     callback(data);
                 }
             },
@@ -41,7 +41,7 @@ $(function () {
     }
 
 
-    $.toast = function(msg){
+    $.toast = function (msg) {
         bootbox.alert(msg);
         //$.toaster({priority: 'warning', message: msg});
     }
