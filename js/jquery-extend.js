@@ -2,6 +2,14 @@
  * Created by wuzhong on 16/1/22.
  */
 $(function () {
+
+    Date.prototype.formatDate = function () {
+        var day = this.getDate();
+        var monthIndex = this.getMonth() + 1;
+        var year = this.getFullYear();
+        return year + "/" + monthIndex + "/" + day;
+    }
+
     $.fn.serializeObject = function () {
         var o = {};
         var a = this.serializeArray();
