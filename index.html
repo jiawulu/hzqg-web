@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 
 <head>
 
@@ -27,6 +27,10 @@
         .modal100 > .modal-dialog {
             width: 100% !important;
         }
+
+        #page-wrapper > div {
+            padding-top: 20px
+        }
     </style>
 
 </head>
@@ -43,14 +47,14 @@
         <!-- Top Menu Items -->
         <ul class="nav navbar-right top-nav">
             <li id="upload_btn">
-                <a href="#">XXXXX</a>
+                <a href="#" id="regist">注册新用户</a>
             </li>
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> 欢迎您 <b
                         class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                        <a href="#" id="logout"><i class="fa fa-fw fa-power-off"></i> 登出 </a>
                     </li>
                 </ul>
             </li>
@@ -60,47 +64,53 @@
 
     <div id="page-wrapper" style="padding-top: 20px">
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="input-group" id="adv-search">
-                    <input type="text" class="form-control" placeholder="Search for snippets"/>
-                    <div class="input-group-btn">
-                        <div class="btn-group" role="group">
-                            <div class="dropdown dropdown-lg">
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                                        aria-expanded="false"><span class="caret"></span></button>
-                                <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                    <form class="form-horizontal" role="form">
-                                        <div class="form-group">
-                                            <label for="filter">Filter by</label>
-                                            <select class="form-control">
-                                                <option value="0" selected>All Snippets</option>
-                                                <option value="1">Featured</option>
-                                                <option value="2">Most popular</option>
-                                                <option value="3">Top rated</option>
-                                                <option value="4">Most commented</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="contain">Author</label>
-                                            <input class="form-control" type="text"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="contain">Contains the words</label>
-                                            <input class="form-control" type="text"/>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary"><span
-                                                class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                                    </form>
-                                </div>
-                            </div>
-                            <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-search"
-                                                                                aria-hidden="true"></span></button>
-                        </div>
+        <div class="row" id="toolbar">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="warnsearch" class="col-sm-3 control-label">预警查询</label>
+                    <div class="col-sm-8">
+                        <select id="warnsearch" class="form-control">
+                            <option value="20" selected>样品确认预警</option>
+                            <option value="10">评审单签样预警</option>
+                            <option value="5">测试时间预警</option>
+                            <option value="1">进度核对预警</option>
+                            <option value="0">自定义查询</option>
+                        </select>
                     </div>
                 </div>
             </div>
+            <div class="col-md-4">
+            </div>
+            <div style="float: right;padding-right: 10px">
+                <!--<button type="button" class="btn btn-default">自定义查询</button>-->
+                <button type="button" class="btn btn-primary">导入合同资料</button>
+            </div>
         </div>
+
+        <div class="row" id="customsearch" style="display: none">
+
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="startJq">交期开始时间</label>
+                    <input type="datetime" class="form-control date-picker" name="startJq" id="startJq">
+                </div>
+                <div class="form-group">
+                    <label for="endJq">交期结束时间</label>
+                    <input type="datetime" class="form-control date-picker" name="endJq" id="endJq">
+                </div>
+                <div class="form-group">
+                    <label for="zjcs_input">中检次数</label>
+                    <input type="number" class="form-control" name="zjcs" id="zjcs_input">
+                </div>
+                <div class="form-group">
+                    <label for="cycs_input">出运次数</label>
+                    <input type="number" class="form-control" name="cycs" id="cycs_input">
+                </div>
+                <button type="submit" class="btn btn-default">查询</button>
+            </form>
+
+        </div>
+
 
         <div class="table-responsive" style="padding-top: 20px">
             <table id="main_table" class="table table-bordered table-hover" cellspacing="0" width="100%">
@@ -146,7 +156,7 @@
 
 <script id="main_table_tmpl" type="x-tmpl-mustache">
 {{#values}}
-<tr>
+<tr data-id="{{id}}" >
 <td>{{    kh }}    </td>
 <td>{{    khddh }} </td>
 <td>{{    wxjq_date }}  </td>
@@ -175,10 +185,40 @@
 {{/values}}
 </script>
 
+
+<script id="htzl_upload_tmpl" type="x-tmpl-mustache">
+<iframe src="fileupload.html" style="
+    width: 100%;
+    height: 100%;
+    border-width: 0;
+"></iframe>
+</script>
+
 <script id="gdzj_form_tmpl" type="x-tmpl-mustache">
 <div class="row">
 <div class="col-md-12">
-    <form class="form-horizontal">
+
+    <form class="form-inline">
+                <div class="form-group">
+                    <label for="startJq">交期开始时间</label>
+                    <input type="datetime" class="form-control date-picker" name="startJq" id="startJq">
+                </div>
+                <div class="form-group">
+                    <label for="endJq">交期结束时间</label>
+                    <input type="datetime" class="form-control date-picker" name="endJq" id="endJq">
+                </div>
+                <div class="form-group">
+                    <label for="zjcs_input">中检次数</label>
+                    <input type="number" class="form-control" name="zjcs" id="zjcs_input">
+                </div>
+                <div class="form-group">
+                    <label for="cycs_input">出运次数</label>
+                    <input type="number" class="form-control" name="cycs" id="cycs_input">
+                </div>
+                <button type="submit" class="btn btn-default">查询</button>
+            </form>
+
+    <form class="form-inline">
         <div class="form-group">
             <label class="col-md-3 control-label" for="name">
                 Name
@@ -223,7 +263,6 @@
 </div>
 </div>
 
-
 </script>
 
 
@@ -231,9 +270,11 @@
 <script src="vendor/bootstrap/bootstrap.min.js"></script>
 <script src="vendor/jqPaginator.min.js"></script>
 <script src="vendor/mustache.min.js"></script>
+<script src="vendor/bootbox.min.js"></script>
 <script src="js/jquery-extend.js"></script>
 <script src="js/nouse/jquery.toaster.js"></script>
-<script src="vendor/bootbox.min.js"></script>
+<script src="vendor/datepicker/bootstrap-datepicker.js"></script>
+<script src="vendor/datepicker/bootstrap-datepicker.zh-CN.min.js"></script>
 <script src="js/index.js"></script>
 
 </body>

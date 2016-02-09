@@ -20,28 +20,55 @@ $(function () {
     $("#login-submit").click(function (e) {
         e.preventDefault();
         var form = $("#login-form").serializeObject();
-        if(!form.username){
-            $.toaster({ priority : 'warning', title : '错误', message : '请输入用户名'});
+        if (!form.username) {
+            $.toast('请输入用户名');
             return;
         }
-        if(!form.password){
-            $.toaster({ priority : 'warning', title : '错误', message : '请输入密码'});
+        if (!form.password) {
+            $.toast('请输入密码');
             return;
         }
 
-        $.restApi("rest/open/login",{
-            userName : form.username,
-            passWord : form.password
-        }, function(data){
-            if(data.success){
+        $.restApi("rest/open/login", {
+            userName: form.username,
+            passWord: form.password
+        }, function (data) {
+            if (data.success) {
                 window.location.href = "index.html"
-            }else {
+            } else {
                 $.toast("登录失败")
             }
 
-        },"POST")
+        }, "POST")
+    })
 
+    $("#register-submit").click(function (e) {
+        e.preventDefault();
+        var form = $("#register-form").serializeObject();
+        if (!form.username) {
+            $.toast('请输入用户名');
+            return;
+        }
+        if (!form.password) {
+            $.toast('请输入密码');
+            return;
+        }
+        if (form.password  != form.confirmpassword) {
+            $.toast('密码和确认密码不匹配');
+            return;
+        }
 
+        $.restApi("rest/open/register", {
+            userName: form.username,
+            passWord: form.password
+        }, function (data) {
+            if (data.success) {
+                $.toast("注册成功")
+            } else {
+                $.toast("注册失败")
+            }
+
+        }, "POST")
     })
 
 
