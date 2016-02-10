@@ -183,6 +183,7 @@
 <td>{{    jyyq }}  </td>
 </tr>
 {{/values}}
+
 </script>
 
 
@@ -192,79 +193,199 @@
     height: 100%;
     border-width: 0;
 "></iframe>
+
+
+
+
+
 </script>
 
-<script id="gdzj_form_tmpl" type="x-tmpl-mustache">
-<div class="row">
-<div class="col-md-12">
-
-    <form class="form-inline">
-                <div class="form-group">
-                    <label for="startJq">交期开始时间</label>
-                    <input type="datetime" class="form-control date-picker" name="startJq" id="startJq">
+<script type="x-tmpl-mustache" id="gdsj_tmpl">
+    <div class="row">
+        <div class="col-md-12">
+            <form id="htzl_update_form" class="form-horizontal">
+                <label class="col-sm-2 control-label">采购交期</label>
+                <div class="col-sm-2">
+                    <p class="form-control-static">{{ cgjq_date }}</p>
                 </div>
-                <div class="form-group">
-                    <label for="endJq">交期结束时间</label>
-                    <input type="datetime" class="form-control date-picker" name="endJq" id="endJq">
+                <label class="col-sm-2 control-label">客号</label>
+                <div class="col-sm-2">
+                    <p class="form-control-static">{{ kehao }} </p>
                 </div>
-                <div class="form-group">
-                    <label for="zjcs_input">中检次数</label>
-                    <input type="number" class="form-control" name="zjcs" id="zjcs_input">
+                <label class="col-sm-2 control-label">下单日期</label>
+                <div class="col-sm-2">
+                    <p class="form-control-static">{{ xdrq_date }}</p>
                 </div>
-                <div class="form-group">
-                    <label for="cycs_input">出运次数</label>
-                    <input type="number" class="form-control" name="cycs" id="cycs_input">
+                <label class="col-sm-2 control-label">采购合同</label>
+                <div class="col-sm-2">
+                    <p class="form-control-static">{{ cght }}</p>
                 </div>
-                <button type="submit" class="btn btn-default">查询</button>
+                <label class="col-sm-2 control-label">工厂</label>
+                <div class="col-sm-2">
+                    <p class="form-control-static">{{ gc }}</p>
+                </div>
+                <label class="col-sm-2 control-label">数量</label>
+                <div class="col-sm-2">
+                    <p class="form-control-static">{{ sl }}</p>
+                </div>
+                <label class="col-sm-2 control-label">样品确认时间</label>
+                <div class="col-sm-2">
+                    <input type="datetime" class="form-control date-picker" name="ypqrsj" id="ypqrsj" value="{{ypqrsj_date}}">
+                </div>
+                <label class="col-sm-2 control-label">评审单签样时间</label>
+                <div class="col-sm-2">
+                    <input type="datetime" class="form-control  date-picker" name="psdqysj" id="psdqysj" value="{{psdqysj_date}}">
+                </div>
+                <label class="col-sm-2 control-label">测试完成时间</label>
+                <div class="col-sm-2">
+                    <input type="datetime" class="form-control date-picker" name="cswcsj" id="cswcsj" value="{{cswcsj_date}}">
+                </div>
+                <label class="col-sm-2 control-label">测试要求</label>
+                <div class="col-sm-2">
+                    <select class="form-control" name="csyq" id="csyq" value="{{csyq}}">
+                        <option value="1" >是</option>
+                        <option value="0">否</option>
+                    </select>
+                </div>
             </form>
 
-    <form class="form-inline">
-        <div class="form-group">
-            <label class="col-md-3 control-label" for="name">
-                Name
-            </label>
-            <div class="col-md-7">
-                <input id="name" name="name" type="text" placeholder="Your name"   class="form-control input-md">
-           </div>
         </div>
-        <div class="form-group">
-            <label class="col-md-3 control-label" for="name">
-                Name
-            </label>
-            <div class="col-md-7">
-                <input id="number" name="number" type="number" placeholder="number"   class="form-control input-md">
-           </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-10">
+            <h5>跟单中检</h5>
         </div>
-        <div class="form-group">
-            <label class="col-md-3 control-label" for="name">
-                Name
-            </label>
-            <div class="col-md-7">
-                <textarea class="form-control" ></textarea>
-           </div>
+        <div class="col-md-2">
+            <button type="button" id="addzjbtn" class="btn btn-sm btn-primary">增加中检</button>
         </div>
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="name">
-                Name
-            </label>
-            <div class="col-md-4">
-                <input id="name" name="name" type="text" placeholder="Your name"   class="form-control input-md">
-           </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 table-responsive">
+            <table id="gdzj_table" class="table table-bordered table-hover" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th nowrap="nowrap">进度核对时间</th>
+                    <th nowrap="nowrap">进度核对情况</th>
+                    <th nowrap="nowrap">中检核对时间</th>
+                    <th nowrap="nowrap">中检核对情况</th>
+                    <th nowrap="nowrap">整改措施</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
         </div>
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="name">
-                Name
-            </label>
-            <div class="col-md-4">
-                <input id="name" name="name" type="text" placeholder="Your name"   class="form-control input-md">
-           </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-10">
+            <h5>出运检验</h5>
         </div>
-    </form>
-</div>
-</div>
+        <div class="col-md-2">
+            <button type="button" id="addcjbtn" class="btn btn-sm btn-primary">增加出检</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 table-responsive">
+            <table id="cyjy_table" class="table table-bordered table-hover" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th nowrap="nowrap">检验时间</th>
+                    <th nowrap="nowrap">检验结果</th>
+                    <th nowrap="nowrap">内容备注</th>
+                    <th nowrap="nowrap">整改内容</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</script>
+
+<script id="gdzj_table_tmpl" type="x-tmpl-mustache">
+{{#zjs}}
+<tr >
+<td>{{    jdhdsj_date }} </td>
+<td>{{    jdhdqk }} </td>
+<td>{{    zjhdsj_date }} </td>
+<td>{{    zjhdqk }} </td>
+<td>{{    zgcs }}   </td>
+</tr>
+{{/zjs}}
+</script>
+
+<script id="cyjc_table_tmpl" type="x-tmpl-mustache">
+{{#cjs}}
+<tr >
+<td>{{    jysj_date }} </td>
+<td>{{    jyjg }} </td>
+<td>{{    nrbz }} </td>
+<td>{{    zgnr }} </td>
+</tr>
+{{/cjs}}
+</script>
+
+<script id="gdzj_form_tmpl" type="x-tmpl-mustache" style="display: none">
+    <div class="row">
+        <div class="col-md-12">
+            <form id="addzjform">
+                <div class="form-group">
+                    <label>进度核对时间</label>
+                    <input type="datetime" class="form-control date-picker" name="jdhdsj" id="jdhdsj">
+                </div>
+                <div class="form-group">
+                    <label>进度核对情况</label>
+                    <textarea class="form-control" name="jdhdqk" id="jdhdqk"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>中检核对时间</label>
+                    <input type="datetime" class="form-control date-picker" name="zjhdsj" id="zjhdsj">
+                </div>
+                <div class="form-group">
+                    <label>中检核对情况</label>
+                    <textarea  class="form-control" name="zjhdqk" id="zjhdqk" ></textarea>
+                </div>
+                <div class="form-group">
+                    <label>整改措施</label>
+                    <textarea  class="form-control" name="zgcs" id="zgcs" ></textarea>
+                </div>
+            </form>
+        </div>
+    </div>
 
 </script>
 
+<script id="cyjc_form_tmpl" type="x-tmpl-mustache" style="display: none">
+    <div class="row">
+        <div class="col-md-12">
+            <form id="addcjform">
+                <div class="form-group">
+                    <label>检验时间</label>
+                    <input type="datetime" class="form-control date-picker" name="jysj" id="jysj">
+                </div>
+                <div class="form-group">
+                    <label>检验结果</label>
+                     <select class="form-control" name="jyjg" id="jyjg">
+                        <option value="通过">通过</option>
+                        <option value="不通过">不通过</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>内容备注</label>
+                    <textarea  class="form-control" name="nrbz" id="nrbz" ></textarea>
+                </div>
+                <div class="form-group">
+                    <label>整改内容</label>
+                    <textarea  class="form-control" name="zgnr" id="zgnr" ></textarea>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</script>
 
 <script>window.jQuery || document.write('<script src="vendor/jquery/jquery-1.12.0.min.js"><\/script>')</script>
 <script src="vendor/bootstrap/bootstrap.min.js"></script>
