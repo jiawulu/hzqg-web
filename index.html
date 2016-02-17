@@ -45,13 +45,22 @@
             <a class="navbar-brand" href="index.html">信息管理系统</a>
         </div>
         <!-- Top Menu Items -->
-        <ul class="nav navbar-right top-nav">
-            <li id="upload_btn">
+        <ul class="nav navbar-right top-nav" style="display: none">
+            <li id="import_htzl_btn" style="display: none">
+                <a href="#">导入合同资料</a>
+            </li>
+            <li id="import_spzl_btn" style="display: none">
+                <a href="#">导入索赔资料</a>
+            </li>
+            <li id="regist_user_btn" style="display: none">
                 <a href="#" id="regist">注册新用户</a>
             </li>
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> 欢迎您 <b
-                        class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-user">
+                    </i><label id="name_label">欢迎您</label>
+                    <b class="caret"></b>
+                </a>
                 <ul class="dropdown-menu">
                     <li>
                         <a href="#" id="logout"><i class="fa fa-fw fa-power-off"></i> 登出 </a>
@@ -66,8 +75,7 @@
 
         <div class="row" id="toolbar">
             <div class="col-md-4">
-                <div class="form-group">
-                    <label for="warnsearch" class="col-sm-3 control-label">预警查询</label>
+                    <label for="warnsearch" class="col-sm-3 control-label" style="font-size: 20px;">预警查询</label>
                     <div class="col-sm-8">
                         <select id="warnsearch" class="form-control">
                             <option value="20" selected>样品确认预警</option>
@@ -77,13 +85,6 @@
                             <option value="0">自定义查询</option>
                         </select>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-            </div>
-            <div style="float: right;padding-right: 10px">
-                <!--<button type="button" class="btn btn-default">自定义查询</button>-->
-                <button type="button" class="btn btn-primary">导入合同资料</button>
             </div>
         </div>
 
@@ -116,6 +117,7 @@
             <table id="main_table" class="table table-bordered table-hover" cellspacing="0" width="100%">
                 <thead>
                 <tr>
+                    <th nowrap="nowrap">出运情况</th>
                     <th nowrap="nowrap">客户</th>
                     <th nowrap="nowrap">客户订单号</th>
                     <th nowrap="nowrap">外销交期</th>
@@ -152,11 +154,16 @@
 
     </div>
 
+
+
 </div>
+
+
 
 <script id="main_table_tmpl" type="x-tmpl-mustache">
 {{#values}}
 <tr data-id="{{id}}" >
+<td align="center"><input class="checkbox" type="checkbox"  {{#cywc}}checked{{/cywc}}></td>
 <td>{{    kh }}    </td>
 <td>{{    khddh }} </td>
 <td>{{    wxjq_date }}  </td>
@@ -184,19 +191,26 @@
 </tr>
 {{/values}}
 
+
+
 </script>
 
 
 <script id="htzl_upload_tmpl" type="x-tmpl-mustache">
-<iframe src="fileupload.html" style="
+<iframe src="upload_htzl.html" style="
     width: 100%;
     height: 100%;
     border-width: 0;
 "></iframe>
 
+</script>
 
-
-
+<script id="spzl_upload_tmpl" type="x-tmpl-mustache">
+<iframe src="upload_spzl.html" style="
+    width: 100%;
+    height: 100%;
+    border-width: 0;
+"></iframe>
 
 </script>
 
@@ -303,6 +317,31 @@
             </table>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-10">
+            <h5>索赔资料</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 table-responsive">
+            <table id="spzl_table" class="table table-bordered table-hover" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th nowrap="nowrap">记账客户</th>
+                    <th nowrap="nowrap">实际赔付USD</th>
+                    <th nowrap="nowrap">索赔日期</th>
+                    <th nowrap="nowrap">索赔原因</th>
+                    <th nowrap="nowrap">内销合同号</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
 </script>
 
 <script id="gdzj_table_tmpl" type="x-tmpl-mustache">
@@ -315,6 +354,8 @@
 <td>{{    zgcs }}   </td>
 </tr>
 {{/zjs}}
+
+
 </script>
 
 <script id="cyjc_table_tmpl" type="x-tmpl-mustache">
@@ -326,6 +367,19 @@
 <td>{{    zgnr }} </td>
 </tr>
 {{/cjs}}
+</script>
+
+
+<script id="spzl_table_tmpl" type="x-tmpl-mustache">
+{{#spzl}}
+<tr >
+<td>{{    jzkh }} </td>
+<td>{{    sjpfusd }} </td>
+<td>{{    sprq_date }} </td>
+<td>{{    spyy }} </td>
+<td>{{    nxhth }} </td>
+</tr>
+{{/spzl}}
 </script>
 
 <script id="gdzj_form_tmpl" type="x-tmpl-mustache" style="display: none">
@@ -356,6 +410,8 @@
         </div>
     </div>
 
+
+
 </script>
 
 <script id="cyjc_form_tmpl" type="x-tmpl-mustache" style="display: none">
@@ -384,6 +440,8 @@
             </form>
         </div>
     </div>
+
+
 
 </script>
 

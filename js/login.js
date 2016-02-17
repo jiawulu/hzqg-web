@@ -60,7 +60,8 @@ $(function () {
 
         $.restApi("rest/open/register", {
             userName: form.username,
-            passWord: form.password
+            passWord: form.password,
+            role : form.role
         }, function (data) {
             if (data.success) {
                 $.toast("注册成功")

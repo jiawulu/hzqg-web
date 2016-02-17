@@ -12,7 +12,7 @@ function getTime(date) {
 }
 
 function getDate(time) {
-    return  0 == time ? "" : (new Date(time)).formatDate();
+    return 0 == time ? "" : (new Date(time)).formatDate();
 }
 /**
  * Created by wuzhong on 16/1/22.
@@ -22,8 +22,118 @@ $(function () {
     var pageNo = 1;
     var paginatorInited;
     var mainListData;
+    var updating;
 
+    initTopToolbar();
     initMainTable();
+    initTableOpt();
+
+    function initTopToolbar() {
+        var role = $.readCookie("role");
+        var userName = $.readCookie("name");
+        $("#name_label").html("欢迎 " + ( userName ? userName : ""));
+
+        if (role == 0 || role == 3) {
+            $("#import_htzl_btn").show();
+            $("#import_spzl_btn").show();
+
+            $("#import_htzl_btn").on("click", function (e) {
+                bootbox.dialog({
+                        title: "上传合同资料",
+                        message: $('#htzl_upload_tmpl').html(),
+                    }
+                );
+            })
+
+            $("#import_spzl_btn").on("click", function (e) {
+                bootbox.dialog({
+                        title: "上传索赔资料",
+                        message: $('#spzl_upload_tmpl').html(),
+                    }
+                );
+            })
+        }
+
+        if (role == 0 || role == 1) {
+            $("#regist_user_btn").show();
+            $("#regist_user_btn").on("click", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var win = window.open("regist.html", '_blank');
+                win.focus();
+            })
+        }
+
+        $("#logout").on("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            function delCookie(name) {
+                var exp = new Date();
+                exp.setTime(exp.getTime() - 1);
+                var cval = getCookie(name);
+                if (cval != null)
+                    document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
+            }
+
+            function getCookie(name) {
+                var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+                if (arr = document.cookie.match(reg))
+                    return unescape(arr[2]);
+                else
+                    return null;
+            }
+
+            delCookie("sid");
+            window.location.href = "login.html"
+        })
+
+        $("nav .navbar-right").show();
+    }
+
+    function initTableOpt() {
+
+        var role = $.readCookie("role");
+        if (role == 0 || role == 3) {
+            $("#main_table").on("click", "input.checkbox", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                var id = $(this).parent().parent().attr("data-id");
+                var cywc = this.checked;
+
+                if (updating) {
+                    $.toast("请勿重复提交");
+                    return;
+                }
+                updating = true;
+                $.restApi("rest/htzl/uploadCyqk", {
+                    htId: id,
+                    cyqk: cywc
+                }, function (data) {
+                    updating = false;
+                    if (data.success) {
+
+                        if (cywc) {
+                            $(e.target).prop("checked", true);
+                        } else {
+                            $(e.target).prop("checked", false);
+                        }
+
+                    } else {
+                        $.toast("更新出运状态失败")
+                    }
+                }, "POST");
+            })
+        }
+
+        $("#main_table").on("dblclick", "tr", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var id = $(this).attr("data-id");
+            popGdsj(id);
+        })
+
+    }
 
     function initMainTable() {
 
@@ -70,6 +180,10 @@ $(function () {
                 var rendered = Mustache.render(template, data.data);
                 $('#main_table tbody').html(rendered);
 
+                var role = $.readCookie("role");
+                if (role != 0 && role != 3) {
+                    $("#main_table .checkbox").attr('disabled',true);
+                }
 
                 //init pager
                 initOrUpdatePaginator(data.data);
@@ -134,58 +248,6 @@ $(function () {
         initMainTable();
     })
 
-    $('.date-picker').datepicker({
-        language: 'zh-CN',
-        autoclose: true,
-        format: "yyyy-mm-dd",
-        todayHighlight: true
-    })
-
-    $("#toolbar button").on("click", function (e) {
-        bootbox.dialog({
-                title: "上传合同资料",
-                message: $('#htzl_upload_tmpl').html(),
-            }
-        );
-    })
-
-    $("#main_table").on("dblclick", "tr", function (e) {
-
-        //console.log(e);
-        var id = $(this).attr("data-id");
-        popGdsj(id);
-
-    })
-
-    $("#logout").on("click", function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        function delCookie(name) {
-            var exp = new Date();
-            exp.setTime(exp.getTime() - 1);
-            var cval = getCookie(name);
-            if (cval != null)
-                document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
-        }
-
-        function getCookie(name) {
-            var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
-            if (arr = document.cookie.match(reg))
-                return unescape(arr[2]);
-            else
-                return null;
-        }
-
-        delCookie("sid");
-        window.location.href = "login.html"
-    })
-
-    $("#regist").on("click", function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        var win = window.open("regist.html", '_blank');
-        win.focus();
-    })
 
     function findHtzlBy(id) {
         if (mainListData) {
@@ -221,6 +283,10 @@ $(function () {
         }
         htzl.cswcsj_date = function () {
             return getDate(this.cswcsj);
+        }
+
+        htzl.sprq_date = function () {
+            return getDate(this.sprq);
         }
 
         var template = $('#gdsj_tmpl').html();
@@ -274,7 +340,7 @@ $(function () {
         );
         initDatePicker();
 
-        $("select#csyq")[0].value= htzl.csyq;
+        $("select#csyq")[0].value = htzl.csyq;
 
         var param = {
             htId: htzl.id
@@ -298,6 +364,17 @@ $(function () {
                 $("#addcjbtn").on('click', function (e) {
                     popAddCj(htzl);
                 });
+            } else {
+                $.toast("加载出检数据失败")
+            }
+        }, "GET");
+
+        $.restApi("rest/spzl/list", {
+            huhao : htzl.gchh
+        }, function (data) {
+            if (data.success) {
+                htzl.spzl = data.data;
+                renderSpTable(htzl);
             } else {
                 $.toast("加载出检数据失败")
             }
@@ -381,4 +458,13 @@ $(function () {
         var rendered = Mustache.render(table, htzl);
         $("#cyjy_table tbody").html(rendered);
     }
-});
+
+    function renderSpTable(htzl) {
+        var table = $('#spzl_table_tmpl').html();
+        Mustache.parse(table);   // optional, speeds up future uses
+        var rendered = Mustache.render(table, htzl);
+        $("#spzl_table tbody").html(rendered);
+    }
+
+})
+;
