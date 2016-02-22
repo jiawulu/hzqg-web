@@ -2,10 +2,12 @@
 <html lang="zh_CN">
 <head>
     <meta charset="UTF-8">
+    <!-- build:style  bootstrap_css -->
     <link href="vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <!-- /build -->
 </head>
 <body>
-<form method="post" action="http://localhost/rest/htzl/upload" enctype="multipart/form-data">
+<form method="post" action="/rest/htzl/upload" enctype="multipart/form-data">
     <div class="form-group">
         <label for="xls_file">选择你要上传的excel文件</label>
         <input type="file" name="file" id="xls_file">

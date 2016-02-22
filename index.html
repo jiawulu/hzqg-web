@@ -75,20 +75,20 @@
 
         <div class="row" id="toolbar">
             <div class="col-md-4">
-                    <label for="warnsearch" class="col-sm-3 control-label" style="font-size: 20px;">预警查询</label>
-                    <div class="col-sm-8">
-                        <select id="warnsearch" class="form-control">
-                            <option value="20" selected>样品确认预警</option>
-                            <option value="10">评审单签样预警</option>
-                            <option value="5">测试时间预警</option>
-                            <option value="1">进度核对预警</option>
-                            <option value="0">自定义查询</option>
-                        </select>
-                    </div>
+                <label for="warnsearch" class="col-sm-3 control-label" style="font-size: 20px;">预警查询</label>
+                <div class="col-sm-8">
+                    <select id="warnsearch" class="form-control">
+                        <option value="20" selected>样品确认预警</option>
+                        <option value="10">评审单签样预警</option>
+                        <option value="5">测试时间预警</option>
+                        <option value="1">进度核对预警</option>
+                        <option value="0">自定义查询</option>
+                    </select>
+                </div>
             </div>
         </div>
 
-        <div class="row" id="customsearch" style="display: none">
+        <div class="row" id="customsearch" style="display: none; padding-left: 40px">
 
             <form class="form-inline">
                 <div class="form-group">
@@ -104,8 +104,20 @@
                     <input type="number" class="form-control" name="zjcs" id="zjcs_input">
                 </div>
                 <div class="form-group">
-                    <label for="cycs_input">出运次数</label>
-                    <input type="number" class="form-control" name="cycs" id="cycs_input">
+                    <label for="cycs_input">出运完成</label>
+                    <select class="form-control" name="cywc"  id="cycs_input" >
+                        <option value="">请选择</option>
+                        <option value="true">是</option>
+                        <option value="false">否</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="huhao_input">货号</label>
+                    <input class="form-control" name="huhao" id="huhao_input">
+                </div>
+                <div class="form-group">
+                    <label for="cght_input">采购合同</label>
+                    <input class="form-control" name="cght" id="cght_input">
                 </div>
                 <button type="submit" class="btn btn-default">查询</button>
             </form>
@@ -155,9 +167,7 @@
     </div>
 
 
-
 </div>
-
 
 
 <script id="main_table_tmpl" type="x-tmpl-mustache">
@@ -193,6 +203,8 @@
 
 
 
+
+
 </script>
 
 
@@ -203,6 +215,8 @@
     border-width: 0;
 "></iframe>
 
+
+
 </script>
 
 <script id="spzl_upload_tmpl" type="x-tmpl-mustache">
@@ -211,6 +225,8 @@
     height: 100%;
     border-width: 0;
 "></iframe>
+
+
 
 </script>
 
@@ -342,6 +358,8 @@
     </div>
 
 
+
+
 </script>
 
 <script id="gdzj_table_tmpl" type="x-tmpl-mustache">
@@ -356,6 +374,8 @@
 {{/zjs}}
 
 
+
+
 </script>
 
 <script id="cyjc_table_tmpl" type="x-tmpl-mustache">
@@ -367,6 +387,8 @@
 <td>{{    zgnr }} </td>
 </tr>
 {{/cjs}}
+
+
 </script>
 
 
@@ -380,6 +402,8 @@
 <td>{{    nxhth }} </td>
 </tr>
 {{/spzl}}
+
+
 </script>
 
 <script id="gdzj_form_tmpl" type="x-tmpl-mustache" style="display: none">
@@ -409,6 +433,8 @@
             </form>
         </div>
     </div>
+
+
 
 
 
@@ -443,19 +469,24 @@
 
 
 
+
+
 </script>
 
+<!-- build:script  vendor_js -->
 <script>window.jQuery || document.write('<script src="vendor/jquery/jquery-1.12.0.min.js"><\/script>')</script>
 <script src="vendor/bootstrap/bootstrap.min.js"></script>
 <script src="vendor/jqPaginator.min.js"></script>
 <script src="vendor/mustache.min.js"></script>
 <script src="vendor/bootbox.min.js"></script>
 <script src="js/jquery-extend.js"></script>
-<script src="js/nouse/jquery.toaster.js"></script>
 <script src="vendor/datepicker/bootstrap-datepicker.js"></script>
 <script src="vendor/datepicker/bootstrap-datepicker.zh-CN.min.js"></script>
-<script src="js/index.js"></script>
+<!-- /build -->
 
+<!-- build:script  index_js -->
+<script src="js/index.js"></script>
+<!-- /build -->
 </body>
 
 </html>

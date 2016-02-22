@@ -12,22 +12,33 @@ module.exports = function (grunt) {
         },
 
         concat: {
-            vender: {
+            vendor: {
                 src: [
                     'vendor/jquery/jquery-1.12.0.min.js',
                     'vendor/bootstrap/bootstrap.js',
                     'vendor/bootbox.min.js',
                     'vendor/jqPaginator.min.js',
-                    'vendor/mustache.min.js'
+                    'vendor/mustache.min.js',
+                    'js/jquery-extend.js',
+                    'vendor/datepicker/bootstrap-datepicker.js',
+                    'vendor/datepicker/bootstrap-datepicker.zh-CN.min.js'
                 ],
-                dest: 'dist/js/vendor.debug.js'
+                dest: 'tmp/vendor.debug.js'
             }
         },
 
         uglify: {
-            vender: {
-                src: 'dist/js/vendor.debug.js',
+            vendor: {
+                src: 'tmp/vendor.debug.js',
                 dest: 'dist/js/vendor.min.js'
+            },
+            login: {
+                src: 'js/login.js',
+                dest: 'dist/js/login.min.js'
+            },
+            index: {
+                src: 'js/index.js',
+                dest: 'dist/js/index.min.js'
             }
         },
 
@@ -44,57 +55,30 @@ module.exports = function (grunt) {
 
         htmlbuild: {
             dist: {
-                src: 'index.html',
+                src: ['upload_htzl.html', 'upload_spzl.html', 'login.html', 'index.html'],
                 dest: 'dist/',
                 options: {
-                    //beautify: true,
-                    //prefix: '//some-cdn',
                     relative: true,
-                    //scripts: {
-                    //    bundle: [
-                    //        '<%= fixturesPath %>/scripts/*.js',
-                    //        '!**/main.js',
-                    //    ],
-                    //    main: '<%= fixturesPath %>/scripts/main.js'
-                    //},
                     styles: {
                         'bootstrap_css': [
                             'dist/css/bootstrap.min.css'
                         ],
-                        'index_css': 'dist/css/index.min.css'
+                        'index_css': [
+                            'dist/css/index.min.css'
+                        ],
                     },
-                    //sections: {
-                    //    views: '<%= fixturesPath %>/views/**/*.html',
-                    //    templates: '<%= fixturesPath %>/templates/**/*.html',
-                    //    layout: {
-                    //        header: '<%= fixturesPath %>/layout/header.html',
-                    //        footer: '<%= fixturesPath %>/layout/footer.html'
-                    //    }
-                    //},
-                    //data: {
-                    //    // Data to pass to templates
-                    //    version: "0.1.0",
-                    //    title: "test",
-                    //},
+                    scripts: {
+                        vendor_js: [
+                            'dist/js/vendor.min.js',
+                        ],
+                        index_js: 'dist/js/index.min.js',
+                        login_js: 'dist/js/login.min.js'
+                    },
                 }
             }
         }
-        //
-        //watch: {
-        //    js: {
-        //        files: ['<%= srcPath%>/*.js'],
-        //        tasks: ['depconcat', 'uglify']
-        //    },
-        //    css: {
-        //        files: ['<%= assetsPath%>/*.less'],
-        //        tasks: ['less', 'cssmin']
-        //    }
-        //}
+        
     });
-
-// grunt plugins
-//    require('load-grunt-tasks')(grunt, { scope: 'devDependencies' });
-//    require('time-grunt')(grunt);
 
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-concat');
@@ -104,9 +88,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-html-build');
 
-
-// Default grunt
-    grunt.registerTask('default', ['clean', 'concat', 'uglify', 'cssmin','htmlbuild'])
+    grunt.registerTask('default', ['clean', 'concat', 'uglify', 'cssmin', 'htmlbuild'])
 
 
 }

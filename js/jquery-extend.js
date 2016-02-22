@@ -29,7 +29,7 @@ $(function () {
 
     $.restApi = function (api, data, callback, method) {
         $.ajax({
-            url: 'http://localhost/' + api,
+            url: '/' + api,
             data: data,
             error: function (e) {
                 console.log(data);
@@ -38,7 +38,7 @@ $(function () {
             success: function (data) {
                 console.log(data);
                 if (-1 == data.code) {
-                    window.location.href = "http://localhost/hzqg/login.html"
+                    window.location.href = "login.html"
                 } else {
                     callback(data);
                 }

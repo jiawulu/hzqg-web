@@ -154,13 +154,22 @@ $(function () {
             if (formdata.zjcs) {
                 param.zjcs = formdata.zjcs;
             }
-            if (formdata.cycs) {
-                param.cycs = formdata.cycs;
+            if (formdata.cywc) {
+                param.cywc = formdata.cywc;
             }
+            if (formdata.huhao) {
+                param.huhao = formdata.huhao;
+            }
+            if (formdata.cght) {
+                param.cght = formdata.cght;
+            }
+
         }
         console.log(param);
 
-        $.restApi("rest/htzl/list", param, function (data) {
+        $.restApi("rest/htzl/list", {
+            json : JSON.stringify(param)
+        }, function (data) {
 
             if (data.success) {
 
